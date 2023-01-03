@@ -2,11 +2,6 @@ import flatpickr from "flatpickr";
 // Додатковий імпорт стилів
 import "flatpickr/dist/flatpickr.min.css";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { Report } from 'notiflix/build/notiflix-report-aio';
-import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
-import { Block } from 'notiflix/build/notiflix-block-aio';
-
 
 
 function addLeadingZero(value) {
@@ -45,7 +40,7 @@ timeSeconds: document.querySelector('span[data-seconds]'),
 let intervalId = null;
 let backTime;
 
-startBtn.disabled = true;
+startBtn.disabled = false;
 const currentDate = new Date();
 
 const options = {
@@ -56,11 +51,13 @@ const options = {
     onClose(selectedDates) {
      if (selectedDates[0] - currentDate <= 0) {
       Notify.failure("Please choose a date in the future");
+      startBtn.disabled = true;
     };
-    // if (selectedDates[0] - currentDate > 0) {
-    //   Notiflix.Notify.success('You have selected the date ${backTime}');
-    // };
-    startBtn.disabled = false;
+    if (selectedDates[0] - currentDate > 0) {
+      Notify.success('You have selected date in the future');
+      startBtn.disabled = false;
+    };
+
   }
 }
 
@@ -78,7 +75,7 @@ intervalId = setInterval (() => {
 
 console.log(backTime);
 
-  if (backTime <= 0) {
+  if (backTime <= 900) {
     clearInterval(intervalId);
     alert("The time has come");
   }
@@ -91,33 +88,3 @@ console.log(backTime);
       refs.timeMinutes.textContent = minutes;
       refs.timeSeconds.textContent = seconds; 
   }
-
-//     input.addEventListener('change', getDayX)
-
-// function getDayX() {
-//     timerId = setInterval(() => {
-//         let backTime = fp.selectedDates[0] - new Date();
-//         const { days, hours, minutes, seconds } = convertMs(backTime);
-//         // console.log('backTime:', backTime); 
-//         console.log('${days} : ${hours} : ${minutes} : ${seconds}'); 
-
-// let currentTime = backTime;
-//         let timeDay = currentTime.getDay();
-//         let timeHours = currentTime.getHours();
-//         let timeMinutes = currentTime.getMinutes();
-//         let timeSeconds = currentTime.getSeconds();
-
-
-
-//         if (backTime <= 0) {
-//             clearInterval(timerId);
-//             return;
-//             // console.log(`Interval with id ${timerId} has stopped!`);
-//           }
-//         }, 1000);
-// }
-
-
-
-
-  
