@@ -38,7 +38,7 @@ timeMinutes: document.querySelector('span[data-minutes]'),
 timeSeconds: document.querySelector('span[data-seconds]'),
 }
 let intervalId = null;
-let backTime;
+let backTime = 0;
 
 startBtn.disabled = false;
 const currentDate = new Date();
@@ -66,13 +66,12 @@ const options = {
     startBtn.addEventListener('click', startTimer);
 
     function startTimer() {
+      startBtn.disabled = true;
 intervalId = setInterval (() => {
   backTime = fp.selectedDates[0] - new Date();
   const dataUpdateTime = convertMs(backTime);
+
   updateFaseTimer(dataUpdateTime) 
-
-  
-
 console.log(backTime);
 
   if (backTime <= 900) {

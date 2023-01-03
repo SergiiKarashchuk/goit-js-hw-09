@@ -3,8 +3,9 @@ const btnStopEl = document.querySelector('.js-btnStop');
 
 btnStartEl.addEventListener('click', onStartClick);
 function onStartClick() {
+    btnStartEl.disabled = true;
     timerId = setInterval(() => {
-        btnStartEl.disabled = true;
+
         document.body.style.background = getRandomHexColor();
     console.log(document.body.style.background);
       }, 1000);

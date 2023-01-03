@@ -18,18 +18,14 @@ function startGame(evt) {
   const amount = Number(refs.amount.value);
 
 
-for (let position = 0; position <= amount; position += 1) {
-createPromise(position, delay)
+for (let position = 0; position < amount; position += 1) {
+createPromise(position + 1, delay)
 .then(({ position, delay }) => {
-    setTimeout (() =>{
     Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  }, delay);
-})
+  }, delay)
 .catch(({position, delay}) => {
-  setTimeout (() =>{
     Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
   }, delay);
-});
 delay += step;
 }
 evt.target.reset();
@@ -41,10 +37,12 @@ function createPromise(position, delay) {
   const promise = {position, delay};
 
   return new Promise((res, rej) => {
+    setTimeout (() =>{
       if (shouldResolve) {
         res(promise)
       } else {
         rej(promise)
       }
+    })
     });
   }
